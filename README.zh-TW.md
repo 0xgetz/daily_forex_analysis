@@ -10,7 +10,7 @@
 
 [![Python](https://img.shields.io/badge/python-3.9%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-178%20passing-brightgreen.svg)](#測試)
+[![Tests](https://img.shields.io/badge/tests-214%20passing-brightgreen.svg)](#測試)
 [![Offline tests](https://img.shields.io/badge/network%20calls%20in%20tests-0-blue.svg)](#測試)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-orange.svg)](#貢獻)
 
@@ -272,7 +272,7 @@ class MyProvider(CandleProvider):
 ## 測試
 
 ```bash
-python -m pytest          # 178 tests
+python -m pytest          # 214 tests
 ```
 
 沒有任何測試會碰觸網路。供應商都以 stub 取代，K 線是帶固定種子的合成資料，指標則對照可手算驗證的案例檢查——單調上漲必須得出 RSI 100、跳空上漲 K 線的真實區間必須採用前一根收盤價、同樣的 ATR 在日圓交叉盤上以點計算時必須小 100 倍。

@@ -96,12 +96,11 @@ def style_line(line: str) -> list:
     return runs or [(text, False)]
 
 
-def normalise(line: str) -> str:
+def normalise(line: str):
     """Turn one raw report line into what a styled terminal would show.
 
-    Strips italic underscores, replaces the markdown horizontal rule with a
-    drawn rule, and pads table cells so the columns actually line up — raw
-    unpadded pipes were the weakest thing on screen.
+    Returns the rewritten line, or ``None`` when the line should be dropped
+    entirely (the markdown table separator, made redundant by padded columns).
     """
     s = line.rstrip()
 
@@ -125,8 +124,8 @@ def normalise(line: str) -> str:
 def align_tables(lines: list) -> list:
     """Pad every pipe-table cell to the widest value in its column.
 
-    Emits a ``├─┼─┤`` separator under the header so it detaches from the data,
-    matching how a terminal table library would render it.
+    The header row is emitted, then a :data:`SEP` sentinel carrying the column
+    widths (drawn as a rule by :func:`render_frame`), then the data rows.
     """
     out, block = [], []
 

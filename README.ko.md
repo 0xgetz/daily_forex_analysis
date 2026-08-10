@@ -10,7 +10,7 @@ pip 단위로 측정하는 멀티 타임프레임 지표 · 24/5 세션 인식 �
 
 [![Python](https://img.shields.io/badge/python-3.9%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-178%20passing-brightgreen.svg)](#테스트)
+[![Tests](https://img.shields.io/badge/tests-214%20passing-brightgreen.svg)](#테스트)
 [![Offline tests](https://img.shields.io/badge/network%20calls%20in%20tests-0-blue.svg)](#테스트)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-orange.svg)](#기여하기)
 
@@ -305,7 +305,7 @@ class MyProvider(CandleProvider):
 ## 테스트
 
 ```bash
-python -m pytest          # 178 tests
+python -m pytest          # 214 tests
 ```
 
 어떤 테스트도 네트워크에 접근하지 않습니다. 제공자는 스텁으로 대체되고, 캔들은 시드가

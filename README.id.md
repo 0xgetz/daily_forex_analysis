@@ -10,7 +10,7 @@ Indikator multi-timeframe dalam satuan pip · sadar sesi pasar 24/5 · penyedia 
 
 [![Python](https://img.shields.io/badge/python-3.9%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-178%20passing-brightgreen.svg)](#pengujian)
+[![Tests](https://img.shields.io/badge/tests-214%20passing-brightgreen.svg)](#pengujian)
 [![Offline tests](https://img.shields.io/badge/network%20calls%20in%20tests-0-blue.svg)](#pengujian)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-orange.svg)](#kontribusi)
 
@@ -305,7 +305,7 @@ class MyProvider(CandleProvider):
 ## Pengujian
 
 ```bash
-python -m pytest          # 178 pengujian
+python -m pytest          # 214 pengujian
 ```
 
 Tidak ada pengujian yang menyentuh jaringan. Penyedia data distub, candle bersifat

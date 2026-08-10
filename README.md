@@ -10,7 +10,7 @@ Multi-timeframe indicators measured in pips · 24/5 session awareness · pluggab
 
 [![Python](https://img.shields.io/badge/python-3.9%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-178%20passing-brightgreen.svg)](#tests)
+[![Tests](https://img.shields.io/badge/tests-214%20passing-brightgreen.svg)](#tests)
 [![Offline tests](https://img.shields.io/badge/network%20calls%20in%20tests-0-blue.svg)](#tests)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-orange.svg)](#contributing)
 
@@ -304,13 +304,18 @@ class MyProvider(CandleProvider):
 ## Tests
 
 ```bash
-python -m pytest          # 178 tests
+python -m pytest          # 214 tests
 ```
 
 No test touches the network. Providers are stubbed, candles are synthetic and seeded,
 and indicators are verified against hand-computable cases — a monotonic rise must give
 RSI 100, a gap-up candle's true range must use the previous close, the same ATR must
 read 100× smaller in pips on a JPY cross.
+
+`tests/test_demo_assets.py` covers the demo-GIF text pipeline in `assets/make_demo.py`:
+markdown consumption, table column alignment, and frame-width wrapping. The image
+drawing itself is not asserted — comparing rasters is brittle — but every transform
+that produced a visible defect is pinned.
 
 > [!NOTE]
 > The bundled CI workflow cannot run until GitHub Actions is enabled on the repository;

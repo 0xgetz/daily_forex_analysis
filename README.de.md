@@ -10,7 +10,7 @@ Multi-Timeframe-Indikatoren, gemessen in Pips · Berücksichtigung der 24/5-Sess
 
 [![Python](https://img.shields.io/badge/python-3.9%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-178%20passing-brightgreen.svg)](#tests)
+[![Tests](https://img.shields.io/badge/tests-214%20passing-brightgreen.svg)](#tests)
 [![Offline tests](https://img.shields.io/badge/network%20calls%20in%20tests-0-blue.svg)](#tests)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-orange.svg)](#mitwirken)
 
@@ -308,7 +308,7 @@ class MyProvider(CandleProvider):
 ## Tests
 
 ```bash
-python -m pytest          # 178 tests
+python -m pytest          # 214 tests
 ```
 
 Kein Test greift auf das Netzwerk zu. Anbieter sind gestubbt, Kerzen sind synthetisch und

@@ -53,6 +53,10 @@ python assets/make_demo.py /tmp/demo.txt assets/demo.gif
 markers are consumed rather than printed, `**bold**` becomes real bold, table columns
 are padded to align, and the rules are drawn as primitives.
 
+Those text transforms are covered by `tests/test_demo_assets.py`, so a regression in
+markdown handling, column alignment, or line wrapping fails the suite rather than
+quietly showing up in the next GIF.
+
 That last detail is deliberate. Repeating `─` (U+2500) to build a rule looks correct
 in a text editor but renders with 1–2 px gaps, because DejaVu Sans Mono advances
 9.03 px per glyph and the fractional part accumulates. The separator and the

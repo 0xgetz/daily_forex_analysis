@@ -10,7 +10,7 @@
 
 [![Python](https://img.shields.io/badge/python-3.9%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-178%20passing-brightgreen.svg)](#тесты)
+[![Tests](https://img.shields.io/badge/tests-214%20passing-brightgreen.svg)](#тесты)
 [![Offline tests](https://img.shields.io/badge/network%20calls%20in%20tests-0-blue.svg)](#тесты)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-orange.svg)](#как-внести-вклад)
 
@@ -306,7 +306,7 @@ class MyProvider(CandleProvider):
 ## Тесты
 
 ```bash
-python -m pytest          # 178 tests
+python -m pytest          # 214 tests
 ```
 
 Ни один тест не обращается к сети. Поставщики подменяются заглушками, свечи
