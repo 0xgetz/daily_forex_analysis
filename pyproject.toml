@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "daily-forex-analysis"
-version = "0.1.0"
+version = "0.2.0"
 description = "LLM-assisted technical analysis for spot FX and metals, with pluggable data providers"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -20,12 +20,17 @@ dependencies = [
 # Keyless default data source.
 yahoo = ["yfinance>=0.2.0"]
 dev = ["pytest>=7.0.0", "yfinance>=0.2.0"]
+desktop = [
+    "PySide6>=6.5.0",
+    "pyqtgraph>=0.13.0",
+]
 
 [project.scripts]
 daily-forex-analysis = "main:main"
+forex-desktop = "desktop.app:main"
 
 [tool.setuptools]
-packages = ["forex"]
+packages = ["forex", "desktop"]
 py-modules = ["main"]
 
 [tool.pytest.ini_options]

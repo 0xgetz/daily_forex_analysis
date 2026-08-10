@@ -37,7 +37,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--bars", type=int, help="Candles to request per timeframe (default 300).")
     parser.add_argument("--provider", help="Preferred provider: twelvedata, alphavantage, yfinance.")
-    parser.add_argument("--format", dest="fmt", choices=("markdown", "json"), help="Report format.")
+    parser.add_argument("--format", dest="fmt", choices=("markdown", "json", "csv", "html"), help="Report format.")
     parser.add_argument("--output-dir", help="Directory for report files (default: reports).")
     parser.add_argument(
         "--dry-run",
@@ -52,6 +52,16 @@ def build_parser() -> argparse.ArgumentParser:
         help="Print configuration and provider availability, then exit.",
     )
     parser.add_argument("--log-level", help="DEBUG, INFO, WARNING, ERROR.")
+    parser.add_argument(
+        "--version",
+        action="version",
+        version="%(prog)s 0.2.0",
+    )
+    parser.add_argument(
+        "--list-symbols",
+        action="store_true",
+        help="Print all supported symbols and exit.",
+    )
     return parser
 
 
@@ -81,6 +91,22 @@ def main(argv: list[str] | None = None) -> int:
         level=getattr(logging, config.log_level, logging.INFO),
         format="%(asctime)s %(levelname)-7s %(name)s: %(message)s",
     )
+
+    if args.list_symbols:
+        from forex.instruments import _ISO_CURRENCIES, _METALS, default_watchlist
+        majors = default_watchlist()
+        print("Default watchlist:")
+        for inst in majors:
+            print(f"  {inst.pretty}")
+        print()
+        print("Supported currencies:")
+        for c in sorted(_ISO_CURRENCIES):
+            print(f"  {c}")
+        print()
+        print("Supported metals:")
+        for m in sorted(_METALS):
+            print(f"  {m} ({_METALS[m][0]})")
+        return 0
 
     if args.check:
         print("Configuration")

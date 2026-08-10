@@ -35,7 +35,7 @@ Multi-timeframe indicators measured in pips · 24/5 session awareness · pluggab
 `daily_forex_analysis` fetches candles from whichever market data provider you have
 access to, computes a multi-timeframe technical picture, optionally asks a language
 model to interpret it, and writes a report you can read in your terminal, commit to
-disk, or push to Telegram.
+disk, push to Telegram, or open in a desktop GUI.
 
 It runs with **zero configuration and no API keys** using Yahoo Finance. Every other
 capability — premium data, LLM commentary, notifications — activates only when you
@@ -65,6 +65,16 @@ Multi-timeframe read: **up** (confidence: medium) — timeframes agree on an upt
 
 Most active during: London, New York
 ```
+
+---
+
+## What's new in 0.2.0
+
+- **Desktop GUI** — native PySide6 application with dark theme, sortable results table, and one-click export. Run `forex-desktop` or `python -m desktop.app`.
+- **CSV export** — flat, spreadsheet-ready output (`--format csv`).
+- **HTML export** — self-contained, styled report you can share or archive (`--format html`).
+- **`--list-symbols`** — print every supported currency and metal, then exit.
+- **`--version`** — print the installed version.
 
 ---
 
@@ -99,6 +109,16 @@ pip install -e ".[dev]"
 
 Requires Python 3.9 or newer.
 
+### Desktop (optional)
+
+```bash
+pip install -e ".[desktop]"
+forex-desktop
+```
+
+> On Linux you may need system OpenGL libraries:
+> `sudo apt install libegl1 libgl1 libxkbcommon0 libdbus-1-3`
+
 ---
 
 ## Quick start
@@ -115,6 +135,15 @@ python main.py --symbols EURUSD,GBPUSD,XAUUSD --timeframes H1,H4,D1
 
 # Machine-readable output
 python main.py --symbols EURUSD --format json
+
+# Spreadsheet-ready output
+python main.py --symbols EURUSD --format csv
+
+# Self-contained styled report
+python main.py --symbols EURUSD --format html
+
+# Launch the desktop app
+forex-desktop
 ```
 
 ### CLI reference
@@ -125,12 +154,14 @@ python main.py --symbols EURUSD --format json
 | `--timeframes` | Subset of `H1,H4,D1` |
 | `--bars` | Candles requested per timeframe (default `300`) |
 | `--provider` | Force `twelvedata`, `alphavantage`, or `yfinance` |
-| `--format` | `markdown` (default) or `json` |
+| `--format` | `markdown` (default), `json`, `csv`, or `html` |
 | `--output-dir` | Destination directory for reports |
 | `--dry-run` | Analyse and print only: no LLM call, no file, no notification |
 | `--no-push` | Skip notifications |
 | `--stdout` | Print the report as well as writing it |
 | `--check` | Print configuration and provider status, then exit |
+| `--list-symbols` | Print every supported symbol, then exit |
+| `--version` | Print the version, then exit |
 | `--log-level` | `DEBUG`, `INFO`, `WARNING`, `ERROR` |
 
 ---
@@ -202,7 +233,7 @@ never discards a report that was already written.
 | `FOREX_BARS` | `300` | Candles requested per timeframe |
 | `FOREX_PROVIDER` | *auto* | Preferred provider name |
 | `FOREX_OUTPUT_DIR` | `reports` | Where reports are written |
-| `FOREX_REPORT_FORMAT` | `markdown` | `markdown` or `json` |
+| `FOREX_REPORT_FORMAT` | `markdown` | `markdown`, `json`, `csv`, or `html` |
 | `LOG_LEVEL` | `INFO` | `DEBUG`, `INFO`, `WARNING`, `ERROR` |
 
 ---
@@ -217,6 +248,8 @@ EURUSD    eur/usd    EUR-USD    EUR_USD    EURUSD=X
 
 Supported: the major and minor currency crosses, plus `XAUUSD` (gold), `XAGUSD`
 (silver), `XPTUSD` (platinum) and `XPDUSD` (palladium).
+
+See everything that is recognised with `python main.py --list-symbols`.
 
 ---
 
@@ -266,10 +299,12 @@ forex/
 ├── providers.py     data sources with ordered fallback
 ├── analysis.py      indicators and structure (pure functions)
 ├── llm.py           optional commentary over computed readings
-├── report.py        Markdown and JSON rendering
+├── report.py        Markdown, JSON, CSV and HTML rendering
 ├── notify.py        optional Telegram push
 ├── config.py        environment / .env configuration
 └── pipeline.py      fetch → analyse → interpret → render → notify
+desktop/
+└── app.py           PySide6 desktop application
 main.py              CLI
 ```
 

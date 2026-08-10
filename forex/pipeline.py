@@ -111,7 +111,7 @@ def build_payload(config: Config, manager: Optional[ProviderManager] = None) -> 
 def write_report(text: str, config: Config, fmt: Optional[str] = None) -> str:
     """Write the report to a timestamped file and return its absolute path."""
     fmt = (fmt or config.report_format).lower()
-    extension = "json" if fmt == "json" else "md"
+    extension = {"json": "json", "csv": "csv", "html": "html"}.get(fmt, "md")
 
     os.makedirs(config.output_dir, exist_ok=True)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
