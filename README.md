@@ -208,6 +208,11 @@ seeded, and indicators are checked against hand-computable cases (a monotonic
 rise must give RSI 100, a gap-up candle's true range must use the previous close,
 and so on).
 
+The bundled CI workflow will not run until GitHub Actions is enabled on the
+repository (a locked or unbilled account leaves runs queued and failing), so the
+test counts above come from local runs on Python 3.14 and a clean editable
+install.
+
 ## Exit codes
 
 | Code | Meaning |
