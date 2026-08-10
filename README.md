@@ -70,7 +70,7 @@ Most active during: London, New York
 
 ## What's new in 0.2.0
 
-- **Desktop GUI** — native PySide6 application with dark theme, sortable results table, and one-click export. Run `forex-desktop` or `python -m desktop.app`.
+- **Desktop GUI** — native PySide6 application with dark theme, sortable results table, interactive candlestick charts (EMA 20/50 overlays), and one-click export to Markdown/JSON/CSV/HTML. Run `forex-desktop` or `python -m desktop.app`.
 - **CSV export** — flat, spreadsheet-ready output (`--format csv`).
 - **HTML export** — self-contained, styled report you can share or archive (`--format html`).
 - **`--list-symbols`** — print every supported currency and metal, then exit.
@@ -115,6 +115,14 @@ Requires Python 3.9 or newer.
 pip install -e ".[desktop]"
 forex-desktop
 ```
+
+The desktop app provides a native dark-themed GUI with three views:
+
+- **Table** — sortable grid of every symbol × timeframe reading
+- **Chart** — interactive candlestick chart with EMA 20/50 overlays; click any symbol in the watchlist to load its D1 chart
+- **Report** — full Markdown report in a monospace viewer
+
+Export any result to Markdown, JSON, CSV, or HTML from the toolbar.
 
 > On Linux you may need system OpenGL libraries:
 > `sudo apt install libegl1 libgl1 libxkbcommon0 libdbus-1-3`

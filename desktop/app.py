@@ -15,11 +15,13 @@ from PySide6.QtWidgets import (
     QLabel, QLineEdit, QPushButton, QComboBox, QTextEdit, QTableWidget,
     QTableWidgetItem, QHeaderView, QSplitter, QGroupBox, QFormLayout,
     QSpinBox, QCheckBox, QMessageBox, QFileDialog, QTabWidget,
+    QListWidget, QListWidgetItem,
 )
 
 from forex.config import Config
 from forex.pipeline import ProviderManager, resolve_instruments, run
 from forex.report import render
+from desktop.chart import ChartWidget
 
 
 class AnalysisWorker(QThread):
@@ -113,9 +115,25 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.provider_label)
         self._refresh_providers()
 
-        # ── Main splitter: table + report ──
-        splitter = QSplitter(Qt.Vertical)
+        # ── Main splitter: left panel + right tabs ──
+        main_splitter = QSplitter(Qt.Orientation.Horizontal)
 
+        # Left: symbol list + quick select
+        left_panel = QWidget()
+        left_layout = QVBoxLayout(left_panel)
+        left_layout.addWidget(QLabel("Watchlist"))
+        self.symbol_list = QListWidget()
+        self.symbol_list.setMaximumWidth(200)
+        self.symbol_list.itemClicked.connect(self._on_symbol_selected)
+        left_layout.addWidget(self.symbol_list)
+        main_splitter.addWidget(left_panel)
+
+        # Right: tabs for Table / Chart / Report
+        right_tabs = QTabWidget()
+
+        # Tab 1: Table
+        table_tab = QWidget()
+        table_layout = QVBoxLayout(table_tab)
         self.table = QTableWidget()
         self.table.setColumnCount(13)
         self.table.setHorizontalHeaderLabels([
@@ -125,15 +143,28 @@ class MainWindow(QMainWindow):
         ])
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
         self.table.setAlternatingRowColors(True)
-        splitter.addWidget(self.table)
+        table_layout.addWidget(self.table)
+        right_tabs.addTab(table_tab, "Table")
 
+        # Tab 2: Chart
+        chart_tab = QWidget()
+        chart_layout = QVBoxLayout(chart_tab)
+        self.chart = ChartWidget()
+        chart_layout.addWidget(self.chart)
+        right_tabs.addTab(chart_tab, "Chart")
+
+        # Tab 3: Report
+        report_tab = QWidget()
+        report_layout = QVBoxLayout(report_tab)
         self.report_view = QTextEdit()
         self.report_view.setReadOnly(True)
         self.report_view.setFont(QFont("JetBrains Mono", 10))
-        splitter.addWidget(self.report_view)
+        report_layout.addWidget(self.report_view)
+        right_tabs.addTab(report_tab, "Report")
 
-        splitter.setSizes([400, 300])
-        layout.addWidget(splitter, stretch=1)
+        main_splitter.addWidget(right_tabs)
+        main_splitter.setSizes([200, 900])
+        layout.addWidget(main_splitter, stretch=1)
 
         # ── Status bar ──
         self.statusBar().showMessage("Ready")
@@ -188,12 +219,53 @@ class MainWindow(QMainWindow):
         )
 
         self._populate_table(payload)
+        self._populate_symbol_list(payload)
         self.report_view.setPlainText(result["report"])
 
     def _on_error(self, msg: str) -> None:
         self.run_btn.setEnabled(True)
         self.statusBar().showMessage("Error")
         QMessageBox.critical(self, "Analysis failed", msg)
+
+    def _on_symbol_selected(self, item: QListWidgetItem) -> None:
+        symbol = item.data(Qt.ItemDataRole.UserRole)
+        if symbol and self._last_result:
+            self._show_chart_for(symbol)
+
+    def _show_chart_for(self, symbol: str) -> None:
+        """Fetch and render the chart for one symbol."""
+        if not self._last_result:
+            return
+        payload = self._last_result["payload"]
+        pair = next((p for p in payload.get("pairs", []) if p.get("symbol") == symbol), None)
+        if not pair or pair.get("error"):
+            self.chart.clear()
+            return
+
+        # Re-fetch the D1 frame for charting (we don't cache frames in payload)
+        from forex.providers import ProviderManager
+        from forex.instruments import parse_symbol
+        try:
+            inst = parse_symbol(symbol)
+            mgr = ProviderManager()
+            candles = mgr.fetch_candles(inst, ["D1"], bars=200)
+            df = candles.frames.get("D1")
+            self.chart.set_data(df, pair.get("pretty", symbol))
+        except Exception as exc:
+            self.chart.clear()
+            self.statusBar().showMessage(f"Chart unavailable: {exc}")
+
+    def _populate_symbol_list(self, payload: dict) -> None:
+        self.symbol_list.clear()
+        for pair in payload.get("pairs", []):
+            pretty = pair.get("pretty", "")
+            symbol = pair.get("symbol", "")
+            error = pair.get("error")
+            item = QListWidgetItem(f"{pretty} {'✗' if error else '✓'}")
+            item.setData(Qt.ItemDataRole.UserRole, symbol)
+            if error:
+                item.setForeground(QColor(248, 81, 73))
+            self.symbol_list.addItem(item)
 
     def _populate_table(self, payload: dict) -> None:
         self.table.setRowCount(0)
