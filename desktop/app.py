@@ -107,6 +107,19 @@ class MainWindow(QMainWindow):
         self.export_btn.setEnabled(False)
         top.addWidget(self.export_btn)
 
+        self.png_btn = QPushButton("Save PNG")
+        self.png_btn.clicked.connect(self._on_save_png)
+        self.png_btn.setEnabled(False)
+        top.addWidget(self.png_btn)
+
+        self.auto_check = QCheckBox("Auto-refresh (5m)")
+        self.auto_check.setChecked(False)
+        self.auto_check.toggled.connect(self._on_auto_toggled)
+        top.addWidget(self.auto_check)
+
+        self.refresh_timer = None
+        self._refresh_interval_ms = 5 * 60 * 1000  # 5 minutes
+
         layout.addLayout(top)
 
         # ── Provider status ──
@@ -301,6 +314,30 @@ class MainWindow(QMainWindow):
                 self.table.setItem(row, 10, QTableWidgetItem(str(read.get("change_pips", ""))))
                 self.table.setItem(row, 11, QTableWidgetItem(pair.get("source", "")))
                 self.table.setItem(row, 12, QTableWidgetItem(alignment.get("verdict", "")))
+
+    def _on_save_png(self) -> None:
+        if not self._last_result:
+            return
+        path, _ = QFileDialog.getSaveFileName(
+            self, "Save chart as PNG", "chart.png", "PNG (*.png)",
+        )
+        if not path:
+            return
+        self.chart.export_png(path)
+        self.statusBar().showMessage(f"Chart saved to {path}")
+
+    def _on_auto_toggled(self, checked: bool) -> None:
+        from PySide6.QtCore import QTimer
+        if checked:
+            if self.refresh_timer is None:
+                self.refresh_timer = QTimer(self)
+                self.refresh_timer.timeout.connect(self._on_run)
+            self.refresh_timer.start(self._refresh_interval_ms)
+            self.statusBar().showMessage("Auto-refresh every 5 minutes")
+        else:
+            if self.refresh_timer is not None:
+                self.refresh_timer.stop()
+            self.statusBar().showMessage("Auto-refresh off")
 
     def _on_export(self) -> None:
         if not self._last_result:

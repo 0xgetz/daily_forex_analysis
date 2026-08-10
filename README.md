@@ -10,7 +10,7 @@ Multi-timeframe indicators measured in pips · 24/5 session awareness · pluggab
 
 [![Python](https://img.shields.io/badge/python-3.9%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-214%20passing-brightgreen.svg)](#tests)
+[![Tests](https://img.shields.io/badge/tests-221%20passing-brightgreen.svg)](#tests)
 [![Offline tests](https://img.shields.io/badge/network%20calls%20in%20tests-0-blue.svg)](#tests)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-orange.svg)](#contributing)
 
@@ -119,10 +119,10 @@ forex-desktop
 The desktop app provides a native dark-themed GUI with three views:
 
 - **Table** — sortable grid of every symbol × timeframe reading
-- **Chart** — interactive candlestick chart with EMA 20/50 overlays; click any symbol in the watchlist to load its D1 chart
+- **Chart** — interactive candlestick chart with EMA 20/50 overlays, RSI(14) and MACD(12/26/9) sub-charts; click any symbol in the watchlist to load its D1 chart. Save any chart as PNG from the toolbar.
 - **Report** — full Markdown report in a monospace viewer
 
-Export any result to Markdown, JSON, CSV, or HTML from the toolbar.
+Export any result to Markdown, JSON, CSV, or HTML from the toolbar. Enable **Auto-refresh** to re-run the analysis every 5 minutes hands-free.
 
 > On Linux you may need system OpenGL libraries:
 > `sudo apt install libegl1 libgl1 libxkbcommon0 libdbus-1-3`
@@ -312,7 +312,8 @@ forex/
 ├── config.py        environment / .env configuration
 └── pipeline.py      fetch → analyse → interpret → render → notify
 desktop/
-└── app.py           PySide6 desktop application
+├── app.py           PySide6 desktop application
+└── chart.py         candlestick chart widget (price + RSI + MACD)
 main.py              CLI
 ```
 
@@ -347,7 +348,7 @@ class MyProvider(CandleProvider):
 ## Tests
 
 ```bash
-python -m pytest          # 214 tests
+python -m pytest          # 221 tests
 ```
 
 No test touches the network. Providers are stubbed, candles are synthetic and seeded,
@@ -359,6 +360,10 @@ read 100× smaller in pips on a JPY cross.
 markdown consumption, table column alignment, and frame-width wrapping. The image
 drawing itself is not asserted — comparing rasters is brittle — but every transform
 that produced a visible defect is pinned.
+
+`tests/test_desktop_chart.py` runs the chart widget offscreen against synthetic OHLC
+series: candles, EMA overlays, and the RSI/MACD sub-charts must all materialise, and
+short series must degrade gracefully instead of raising.
 
 > [!NOTE]
 > The bundled CI workflow cannot run until GitHub Actions is enabled on the repository;
@@ -401,7 +406,3 @@ foreign exchange carries substantial risk of loss.
 ## License
 
 [MIT](LICENSE)
-
-Inspired by the pipeline structure of
-[ZhuLinsen/daily_stock_analysis](https://github.com/ZhuLinsen/daily_stock_analysis).
-This is an independent implementation for FX and shares no code with it.
