@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "daily-forex-analysis"
+version = "0.1.0"
+description = "LLM-assisted technical analysis for spot FX and metals, with pluggable data providers"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+dependencies = [
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "requests>=2.28.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+# Keyless default data source.
+yahoo = ["yfinance>=0.2.0"]
+dev = ["pytest>=7.0.0", "yfinance>=0.2.0"]
+
+[project.scripts]
+daily-forex-analysis = "main:main"
+
+[tool.setuptools]
+packages = ["forex"]
+py-modules = ["main"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = [
+    "network: hits a live API; deselect with -m 'not network'",
+]
