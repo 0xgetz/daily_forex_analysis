@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/logo.svg" alt="daily_forex_analysis" width="128" height="128">
+
 # daily_forex_analysis
 
 **Analisis teknikal untuk spot forex dan logam, dibantu LLM.**
@@ -38,6 +40,10 @@ terminal, simpan ke disk, atau kirim ke Telegram.
 Program ini jalan **tanpa konfigurasi dan tanpa API key** menggunakan Yahoo Finance.
 Setiap kemampuan lain — data premium, komentar LLM, notifikasi — baru aktif kalau kamu
 memasukkan kredensialmu sendiri.
+
+<div align="center">
+  <img src="assets/demo.gif" alt="daily_forex_analysis running in a terminal" width="900">
+</div>
 
 ```console
 $ python main.py --symbols EURUSD,USDJPY --dry-run

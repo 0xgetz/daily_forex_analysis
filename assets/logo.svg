@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="daily_forex_analysis logo">
+  <title>daily_forex_analysis</title>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#141c2b"/>
+      <stop offset="55%" stop-color="#0e1420"/>
+      <stop offset="100%" stop-color="#080c14"/>
+    </linearGradient>
+
+    <linearGradient id="up" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#12a594"/>
+      <stop offset="100%" stop-color="#2ee6c5"/>
+    </linearGradient>
+
+    <linearGradient id="down" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f0517a"/>
+      <stop offset="100%" stop-color="#c22a52"/>
+    </linearGradient>
+
+    <linearGradient id="trend" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2ee6c5" stop-opacity="0.25"/>
+      <stop offset="50%" stop-color="#2ee6c5" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#8ef7e4"/>
+    </linearGradient>
+
+    <!-- fades the session band's top and bottom so it reads as a window of
+         time rather than a rectangle floating over the artwork -->
+    <linearGradient id="band" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2ee6c5" stop-opacity="0"/>
+      <stop offset="22%" stop-color="#2ee6c5" stop-opacity="0.075"/>
+      <stop offset="78%" stop-color="#2ee6c5" stop-opacity="0.075"/>
+      <stop offset="100%" stop-color="#2ee6c5" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="bandEdge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2ee6c5" stop-opacity="0"/>
+      <stop offset="30%" stop-color="#2ee6c5" stop-opacity="0.20"/>
+      <stop offset="70%" stop-color="#2ee6c5" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#2ee6c5" stop-opacity="0"/>
+    </linearGradient>
+
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+  </defs>
+
+  <!-- plate -->
+  <rect x="16" y="16" width="480" height="480" rx="108" fill="url(#bg)"/>
+  <rect x="16.5" y="16.5" width="479" height="479" rx="107.5" fill="none"
+        stroke="#2ee6c5" stroke-opacity="0.16" stroke-width="1"/>
+
+  <!-- London / New York overlap band: edges land in the candle gaps and fade
+       out top and bottom, so it reads as a deliberate session window -->
+  <rect x="222" y="96" width="136" height="312" fill="url(#band)"/>
+  <line x1="222" y1="96" x2="222" y2="408" stroke="url(#bandEdge)" stroke-width="1.5"/>
+  <line x1="358" y1="96" x2="358" y2="408" stroke="url(#bandEdge)" stroke-width="1.5"/>
+
+  <!-- price grid, spaced evenly across the candle range -->
+  <g stroke="#ffffff" stroke-opacity="0.06" stroke-width="1.5">
+    <line x1="88" y1="152" x2="424" y2="152"/>
+    <line x1="88" y1="228" x2="424" y2="228"/>
+    <line x1="88" y1="304" x2="424" y2="304"/>
+    <line x1="88" y1="380" x2="424" y2="380"/>
+  </g>
+
+  <!-- trend glow -->
+  <path d="M120 304 L188 324 L256 244 L324 182 L392 206"
+        fill="none" stroke="#2ee6c5" stroke-opacity="0.30" stroke-width="20"
+        stroke-linecap="round" stroke-linejoin="round" filter="url(#soft)"/>
+
+  <!-- trend through the closes; drawn under the candles so no body is cut -->
+  <path d="M120 304 L188 324 L256 244 L324 182 L392 206"
+        fill="none" stroke="url(#trend)" stroke-width="6"
+        stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- candles: wick + body, closes match the trend path above -->
+  <g stroke-linecap="round">
+    <line x1="120" y1="286" x2="120" y2="372" stroke="#12a594" stroke-width="5"/>
+    <rect x="107" y="304" width="26" height="50" rx="6" fill="url(#up)"/>
+
+    <line x1="188" y1="252" x2="188" y2="346" stroke="#c22a52" stroke-width="5"/>
+    <rect x="175" y="272" width="26" height="52" rx="6" fill="url(#down)"/>
+
+    <line x1="256" y1="222" x2="256" y2="326" stroke="#12a594" stroke-width="5"/>
+    <rect x="243" y="244" width="26" height="62" rx="6" fill="url(#up)"/>
+
+    <line x1="324" y1="160" x2="324" y2="276" stroke="#12a594" stroke-width="5"/>
+    <rect x="311" y="182" width="26" height="74" rx="6" fill="url(#up)"/>
+
+    <line x1="392" y1="140" x2="392" y2="236" stroke="#c22a52" stroke-width="5"/>
+    <rect x="379" y="158" width="26" height="48" rx="6" fill="url(#down)"/>
+  </g>
+
+  <!-- last close marker: hollow so the candle body reads through it -->
+  <circle cx="392" cy="206" r="6.5" fill="none" stroke="#8ef7e4" stroke-width="3.5"/>
+
+  <!-- FX: a pair of currencies, never a single ticker -->
+  <text x="256" y="448" text-anchor="middle"
+        font-family="DejaVu Sans, Verdana, sans-serif" font-weight="700"
+        font-size="44" fill="#e9f6f4" letter-spacing="2">FX</text>
+</svg>

@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/logo.svg" alt="daily_forex_analysis" width="128" height="128">
+
 # daily_forex_analysis
 
 **Технический анализ спотового форекса и металлов с помощью LLM.**
@@ -38,6 +40,10 @@
 Он работает **без всякой настройки и без API-ключей** через Yahoo Finance. Все
 остальные возможности — платные данные, комментарий от LLM, уведомления —
 активируются только тогда, когда вы предоставите собственные учётные данные.
+
+<div align="center">
+  <img src="assets/demo.gif" alt="daily_forex_analysis running in a terminal" width="900">
+</div>
 
 ```console
 $ python main.py --symbols EURUSD,USDJPY --dry-run

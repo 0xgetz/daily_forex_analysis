@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/logo.svg" alt="daily_forex_analysis" width="128" height="128">
+
 # daily_forex_analysis
 
 **현물 FX와 금속을 위한 LLM 보조 기술적 분석.**
@@ -38,6 +40,10 @@ pip 단위로 측정하는 멀티 타임프레임 지표 · 24/5 세션 인식 �
 Yahoo Finance를 사용하면 **설정도 API 키도 전혀 없이** 동작합니다. 그 외의 모든
 기능 — 프리미엄 데이터, LLM 논평, 알림 — 은 사용자가 자신의 자격 증명을 제공할
 때에만 활성화됩니다.
+
+<div align="center">
+  <img src="assets/demo.gif" alt="daily_forex_analysis running in a terminal" width="900">
+</div>
 
 ```console
 $ python main.py --symbols EURUSD,USDJPY --dry-run

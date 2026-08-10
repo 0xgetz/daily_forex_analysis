@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/logo.svg" alt="daily_forex_analysis" width="128" height="128">
+
 # daily_forex_analysis
 
 **面向外汇现货与贵金属的 LLM 辅助技术分析。**
@@ -36,6 +38,10 @@
 
 借助 Yahoo Finance，它可以在**零配置、无需 API 密钥**的情况下运行。其余所有能力
 ——付费数据、LLM 点评、通知推送——都只在你提供自己的凭据后才会启用。
+
+<div align="center">
+  <img src="assets/demo.gif" alt="daily_forex_analysis running in a terminal" width="900">
+</div>
 
 ```console
 $ python main.py --symbols EURUSD,USDJPY --dry-run

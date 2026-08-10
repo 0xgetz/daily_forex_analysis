@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/logo.svg" alt="daily_forex_analysis" width="128" height="128">
+
 # daily_forex_analysis
 
 **スポットFXと貴金属のためのLLM支援テクニカル分析。**
@@ -36,6 +38,10 @@ pips単位で計測するマルチタイムフレーム指標 · 24/5セッシ�
 
 Yahoo Finance を使えば **設定ゼロ・APIキー不要** で動作する。それ以外の機能 —
 プレミアムデータ、LLMによるコメント、通知 — は、自分の認証情報を与えたときにのみ有効化される。
+
+<div align="center">
+  <img src="assets/demo.gif" alt="daily_forex_analysis running in a terminal" width="900">
+</div>
 
 ```console
 $ python main.py --symbols EURUSD,USDJPY --dry-run

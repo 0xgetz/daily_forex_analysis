@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/logo.svg" alt="daily_forex_analysis" width="128" height="128">
+
 # daily_forex_analysis
 
 **Análisis técnico asistido por LLM para forex spot y metales.**
@@ -38,6 +40,10 @@ guardar en disco o enviar a Telegram.
 Funciona **sin configuración y sin API keys** usando Yahoo Finance. Cualquier otra
 capacidad — datos premium, comentario del LLM, notificaciones — se activa únicamente
 al proporcionar credenciales propias.
+
+<div align="center">
+  <img src="assets/demo.gif" alt="daily_forex_analysis running in a terminal" width="900">
+</div>
 
 ```console
 $ python main.py --symbols EURUSD,USDJPY --dry-run

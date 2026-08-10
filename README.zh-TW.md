@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/logo.svg" alt="daily_forex_analysis" width="128" height="128">
+
 # daily_forex_analysis
 
 **運用 LLM 輔助的外匯即期與貴金屬技術分析工具。**
@@ -33,6 +35,10 @@
 `daily_forex_analysis` 會從你能取用的任一市場資料供應商抓取 K 線，計算多時間框架的技術面全貌，並可選擇性地請語言模型加以解讀，最後產出一份報告——你可以在終端機閱讀、寫入磁碟保存，或推送到 Telegram。
 
 使用 Yahoo Finance 時，本專案**無需任何設定、也不需要 API 金鑰**即可運行。其餘所有功能——付費資料、LLM 評述、通知推送——都只在你提供自己的憑證後才會啟用。
+
+<div align="center">
+  <img src="assets/demo.gif" alt="daily_forex_analysis running in a terminal" width="900">
+</div>
 
 ```console
 $ python main.py --symbols EURUSD,USDJPY --dry-run
